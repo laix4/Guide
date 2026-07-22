@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>薪資結算系統 - 使用指南</title>
+    <style>
+        :root {
+            --primary: rgb(94, 72, 132);
+            --primary-light: rgba(94, 72, 132, 0.08);
+            --bg-color: #f5f7fa;
+            --card-bg: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --accent: rgb(255, 127, 80); /* 珊瑚橘 */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* 標題與切換按鈕區塊 */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .header h1 {
+            margin: 0;
+            color: var(--primary);
+            font-size: 28px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .lang-btn:hover { background: rgb(115, 88, 160); }
+
+        /* 內容區塊 */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 22px;
+            border-left: 4px solid var(--accent);
+            padding-left: 12px;
+            margin-bottom: 20px;
+        }
+
+        .highlight-box {
+            background: #fff3e0;
+            border: 1px solid #ffe0b2;
+            padding: 20px;
+            border-radius: 8px;
+            color: #d35400;
+            font-weight: 500;
+            margin: 15px 0;
+        }
+
+        /* 圖文解說 (CSS Mockups) */
+        .mock-image {
+            background: var(--bg-color);
+            border: 1px solid #dcdfe6;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            font-family: monospace;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .mock-title {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        /* 圖示 1: 跨日時間軸 */
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            padding: 20px 0;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: ''; position: absolute; top: 50%; left: 0; right: 0;
+            height: 4px; background: var(--primary-light); z-index: 1;
+        }
+        .point {
+            position: relative; z-index: 2; background: #fff;
+            border: 3px solid var(--primary); border-radius: 50%;
+            width: 20px; height: 20px; text-align: center;
+        }
+        .point-label {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            white-space: nowrap; font-weight: bold; color: var(--text-main); font-family: sans-serif;
+        }
+        .point-time { color: var(--text-muted); font-size: 14px; }
+        .result-box {
+            text-align: center; background: var(--primary); color: #fff;
+            padding: 10px 20px; border-radius: 20px; font-weight: bold;
+            margin-top: 50px; font-family: sans-serif;
+            box-shadow: 0 4px 10px rgba(94, 72, 132, 0.3);
+        }
+
+        /* 圖示 2: 雙格 UI */
+        .mock-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            max-width: 500px; margin: 0 auto; font-family: sans-serif;
+        }
+        .mock-input {
+            background: #fff; border: 2px dashed var(--accent); padding: 15px;
+            border-radius: 8px; text-align: center; font-weight: bold; color: var(--accent);
+        }
+        .mock-input span { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
+
+        /* 圖示 3: 內聯編輯 */
+        .mock-table-row {
+            display: flex; justify-content: space-between; align-items: center;
+            background: #fff; padding: 15px 20px; border-radius: 8px;
+            border: 1px solid #dcdfe6; max-width: 600px; margin: 0 auto; font-family: sans-serif;
+        }
+        .inline-edit {
+            border: 2px solid var(--primary); border-radius: 6px; padding: 5px 15px;
+            font-weight: bold; color: var(--primary); font-size: 16px;
+        }
+
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .header h1 { font-size: 22px; }
+            .mock-grid { grid-template-columns: 1fr; }
+            .mock-table-row { flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>💰 <span id="t_title">薪資與加班費結算系統 - 使用指南</span></h1>
+        <button class="lang-btn" onclick="toggleLang()">
+            🌐 <span id="btn_text">Đổi sang Tiếng Việt</span>
+        </button>
+    </div>
+
+    <div class="section">
+        <p id="t_intro">這套系統專為排班制、夜班與輪班工作者設計，內建符合勞基法的防呆機制與智慧運算。只要掌握以下核心觀念，就能輕鬆、精準地試算每個月的薪水！</p>
+    </div>
+
+    <div class="section">
+        <h2 id="t_h1">💡 必讀：兩大核心觀念</h2>
+        <ul>
+            <li><strong id="t_c1_1">計薪週期（26 號 ～ 25 號）：</strong><span id="t_c1_2">系統預設每個月的結算週期為 <strong>上個月的 26 號到當月的 25 號</strong>。全月圖與所有結算金額，都會嚴格鎖定在這個區間內。</span></li>
+            <li><strong id="t_c2_1">出勤日 (workDate) 規則：</strong><span id="t_c2_2">所有的打卡請以 <strong>「上班當天」</strong> 的日期為準。</span></li>
+        </ul>
+        
+        <div class="highlight-box">
+            <span id="t_example">範例：你是打夜班，7/15 晚上 20:30 上班，一路加班到 7/16 早上 08:20 才下班。請全部記在「7/15」，系統會自動幫你算好，絕對不會把帳切斷跑到隔天。</span>
+        </div>
+
+        <!-- 圖片解說 1 -->
+        <div class="mock-image">
+            <div class="mock-title" id="t_img1_title">圖解：夜班跨日打卡邏輯</div>
+            <div class="timeline">
+                <div class="point">
+                    <div class="point-label">7/15<br><span class="point-time" id="t_time1">20:30 上班</span></div>
+                </div>
+                <div class="point" style="background: var(--accent); border-color: var(--accent);">
+                    <div class="point-label">7/16<br><span class="point-time" id="t_time2">00:00 跨夜</span></div>
+                </div>
+                <div class="point">
+                    <div class="point-label">7/16<br><span class="point-time" id="t_time3">08:20 下班</span></div>
+                </div>
+            </div>
+            <div class="result-box" id="t_img1_result">✅ 全部歸屬出勤日：7月15日</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 id="t_h2">🚀 第一步：基礎薪資設定 (每月只需設定一次)</h2>
+        <p id="t_s1_desc">當你第一次進入系統，或是每個月薪水/班別有異動時，請先點開左側區塊進行設定：</p>
+        <ul>
+            <li><strong id="t_s1_1">該月薪資結構：</strong><span id="t_s1_1_d">如果你這個月上夜班，請勾選「🌙 夜班」。選擇你的「輪班班別」，系統會自動判斷平日與休假。加入全勤等津貼，系統會用來墊高你的「加班費時薪」。</span></li>
+            <li><strong id="t_s1_2">固定扣除項目：</strong><span id="t_s1_2_d">輸入勞保、健保等金額，結算時會自動扣除。</span></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 id="t_h3">📝 第二步：日常打卡（每日加班 / 請假申報）</h2>
+        <p id="t_s2_desc">這是你每天最常使用的區塊，操作非常簡單：選擇 <strong>➕ 加班</strong> 或 <strong>➖ 請假</strong>，選擇日期，輸入時數即可。</p>
+        
+        <div class="highlight-box">
+            <strong id="t_s2_star">🌟 特殊神級功能：夜班 ＋ 颱風假</strong><br>
+            <span id="t_s2_star_d">當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！</span>
+        </div>
+
+        <!-- 圖片解說 2 -->
+        <div class="mock-image">
+            <div class="mock-title" id="t_img2_title">圖解：夜班颱風假 雙格輸入 UI</div>
+            <div class="mock-grid">
+                <div class="mock-input"><span id="t_img2_1">颱風加班時數</span>3.5 H</div>
+                <div class="mock-input"><span id="t_img2_2">平日加班時數</span>2.5 H</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 id="t_h4">📅 第三步：檢查與快速微調 (明細表直接編輯)</h2>
+        <ul>
+            <li><strong id="t_s3_1">全月圖：</strong><span id="t_s3_1_d">開啟「調休編輯模式」後，直接點擊月曆上的格子，就能在各種假別之間無限切換！</span></li>
+            <li><strong id="t_s3_2">明細表快速改時數：</strong><span id="t_s3_2_d">發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。</span></li>
+        </ul>
+
+        <!-- 圖片解說 3 -->
+        <div class="mock-image">
+            <div class="mock-title" id="t_img3_title">圖解：明細表「直接點擊修改」功能</div>
+            <div class="mock-table-row">
+                <div style="color: var(--text-muted); font-weight:bold;">2026-07-15</div>
+                <div style="color: var(--primary); font-weight:bold;">➕ <span id="t_img3_ot">加班</span></div>
+                <div><span class="inline-edit">10.5</span> H</div>
+                <div style="color: var(--accent); font-weight:bold;">+$3401</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 id="t_h5">☁️ 第四步：跨裝置雲端同步</h2>
+        <p id="t_s4_desc">這套系統不依賴伺服器，保護隱私。如果想把電腦資料轉到手機：</p>
+        <ol>
+            <li id="t_s4_1">在電腦上點擊 <strong>「📤 匯出備份檔」</strong>。</li>
+            <li id="t_s4_2">把檔案傳到手機（透過 Line/Email）。</li>
+            <li id="t_s4_3">用手機打開系統，點擊 <strong>「📥 匯入雲端備份」</strong>，選擇該檔案即可無縫接軌！</li>
+        </ol>
+    </div>
+
+</div>
+
+<script>
+    const dict = {
+        zh: {
+            title: "薪資與加班費結算系統 - 使用指南",
+            btn: "Đổi sang Tiếng Việt",
+            intro: "這套系統專為排班制、夜班與輪班工作者設計，內建符合勞基法的防呆機制與智慧運算。只要掌握以下核心觀念，就能輕鬆、精準地試算每個月的薪水！",
+            h1: "💡 必讀：兩大核心觀念",
+            c1_1: "計薪週期（26 號 ～ 25 號）：",
+            c1_2: "系統預設每個月的結算週期為 <strong>上個月的 26 號到當月的 25 號</strong>。全月圖與所有結算金額，都會嚴格鎖定在這個區間內。",
+            c2_1: "出勤日 (workDate) 規則：",
+            c2_2: "所有的打卡請以 <strong>「上班當天」</strong> 的日期為準。",
+            example: "範例：你是打夜班，7/15 晚上 20:30 上班，一路加班到 7/16 早上 08:20 才下班。請全部記在「7/15」，系統會自動幫你算好，絕對不會把帳切斷跑到隔天。",
+            img1_title: "圖解：夜班跨日打卡邏輯",
+            time1: "20:30 上班", time2: "00:00 跨夜", time3: "08:20 下班",
+            img1_result: "✅ 全部歸屬出勤日：7月15日",
+            h2: "🚀 第一步：基礎薪資設定 (每月只需設定一次)",
+            s1_desc: "當你第一次進入系統，或是每個月薪水/班別有異動時，請先點開左側區塊進行設定：",
+            s1_1: "該月薪資結構：",
+            s1_1_d: "如果你這個月上夜班，請勾選「🌙 夜班」。選擇你的「輪班班別」，系統會自動判斷平日與休假。加入全勤等津貼，系統會用來墊高你的「加班費時薪」。",
+            s1_2: "固定扣除項目：",
+            s1_2_d: "輸入勞保、健保等金額，結算時會自動扣除。",
+            h3: "📝 第二步：日常打卡（每日加班 / 請假申報）",
+            s2_desc: "這是你每天最常使用的區塊，操作非常簡單：選擇 <strong>➕ 加班</strong> 或 <strong>➖ 請假</strong>，選擇日期，輸入時數即可。",
+            s2_star: "🌟 特殊神級功能：夜班 ＋ 颱風假",
+            s2_star_d: "當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！",
+            img2_title: "圖解：夜班颱風假 雙格輸入 UI",
+            img2_1: "颱風加班時數", img2_2: "平日加班時數",
+            h4: "📅 第三步：檢查與快速微調 (明細表直接編輯)",
+            s3_1: "全月圖：", s3_1_d: "開啟「調休編輯模式」後，直接點擊月曆上的格子，就能在各種假別之間無限切換！",
+            s3_2: "明細表快速改時數：", s3_2_d: "發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。",
+            img3_title: "圖解：明細表「直接點擊修改」功能",
+            img3_ot: "加班",
+            h5: "☁️ 第四步：跨裝置雲端同步",
+            s4_desc: "這套系統不依賴伺服器，保護隱私。如果想把電腦資料轉到手機：",
+            s4_1: "在電腦上點擊 <strong>「📤 匯出備份檔」</strong>。",
+            s4_2: "把檔案傳到手機（透過 Line/Email）。",
+            s4_3: "用手機打開系統，點擊 <strong>「📥 匯入雲端備份」</strong>，選擇該檔案即可無縫接軌！"
+        },
+        vi: {
+            title: "Hệ Thống Tính Lương & Tăng Ca - Hướng Dẫn",
+            btn: "切換為繁體中文",
+            intro: "Hệ thống này được thiết kế dành riêng cho người làm việc theo ca, ca đêm. Tích hợp cơ chế tính toán thông minh theo luật. Chỉ cần nắm vững các khái niệm sau, bạn có thể tính lương dễ dàng và chính xác!",
+            h1: "💡 Bắt buộc đọc: 2 Khái niệm cốt lõi",
+            c1_1: "Chu kỳ tính lương (Ngày 26 ~ 25):",
+            c1_2: "Hệ thống mặc định chu kỳ kết toán là <strong>từ ngày 26 tháng trước đến ngày 25 tháng này</strong>. Lịch và mọi số tiền đều được khóa chặt trong khoảng thời gian này.",
+            c2_1: "Quy tắc Ngày đi làm (workDate):",
+            c2_2: "Tất cả việc chấm công phải dựa vào ngày <strong>bắt đầu ca làm việc</strong>.",
+            example: "Ví dụ: Bạn làm ca đêm, đi làm lúc 20:30 tối ngày 15/7, tăng ca liên tục đến 08:20 sáng ngày 16/7 mới tan ca. Vui lòng ghi nhận toàn bộ vào \"15/7\", hệ thống sẽ tự động tính toán, tuyệt đối không bị cắt ngang sang ngày hôm sau.",
+            img1_title: "Minh họa: Logic chấm công ca đêm qua ngày",
+            time1: "20:30 Vào ca", time2: "00:00 Qua đêm", time3: "08:20 Tan ca",
+            img1_result: "✅ Tất cả tính vào ngày: 15 tháng 7",
+            h2: "🚀 Bước 1: Cài đặt lương cơ bản (Chỉ 1 lần/tháng)",
+            s1_desc: "Khi mới sử dụng hoặc có thay đổi lương/ca, hãy mở phần bên trái để cài đặt:",
+            s1_1: "Cấu trúc lương:",
+            s1_1_d: "Nếu làm ca đêm, hãy chọn \"🌙 Ca đêm\". Chọn \"Ca làm việc\", hệ thống sẽ tự chia ngày thường và ngày nghỉ. Thêm các phụ cấp (chuyên cần...), hệ thống sẽ dùng nó để nâng mức \"lương giờ tăng ca\" của bạn.",
+            s1_2: "Khấu trừ cố định:",
+            s1_2_d: "Nhập tiền bảo hiểm... hệ thống sẽ tự trừ khi kết toán.",
+            h3: "📝 Bước 2: Chấm công (Tăng ca / Nghỉ phép)",
+            s2_desc: "Đây là phần bạn dùng nhiều nhất: Chọn <strong>➕ Tăng ca</strong> hoặc <strong>➖ Nghỉ phép</strong>, chọn ngày, nhập số giờ là xong.",
+            s2_star: "🌟 Chức năng đặc biệt: Ca đêm + Nghỉ bão",
+            s2_star_d: "Khi chọn \"Ca đêm\" và gặp ngày \"Nghỉ bão\", hệ thống sẽ tự mở rộng thành <strong>lưới 2x2</strong> để bạn nhập 2 mức giờ tăng ca với hệ số khác nhau!",
+            img2_title: "Minh họa: Giao diện nhập 2 mức giờ (Ca đêm bão)",
+            img2_1: "Giờ TC bão", img2_2: "Giờ TC thường",
+            h4: "📅 Bước 3: Kiểm tra & Chỉnh sửa (Sửa trực tiếp)",
+            s3_1: "Lịch chuyên cần:", s3_1_d: "Bật \"Chế độ chỉnh sửa\", bấm trực tiếp vào ô trên lịch để đổi linh hoạt giữa các loại ngày nghỉ!",
+            s3_2: "Sửa nhanh số giờ:", s3_2_d: "Nhập sai giờ? Không cần xóa! Chỉ cần nhập số đúng vào \"ô số giờ\" trong bảng chi tiết, tổng tiền sẽ tự động cập nhật trong 0.1 giây.",
+            img3_title: "Minh họa: Tính năng \"Bấm để sửa\" trong bảng",
+            img3_ot: "Tăng ca",
+            h5: "☁️ Bước 4: Đồng bộ đám mây đa thiết bị",
+            s4_desc: "Hệ thống không dùng máy chủ để bảo mật. Muốn chuyển dữ liệu từ máy tính sang điện thoại:",
+            s4_1: "Trên máy tính bấm <strong>\"📤 Xuất bản sao lưu\"</strong>.",
+            s4_2: "Gửi file đó sang điện thoại (qua Line/Email).",
+            s4_3: "Mở hệ thống trên điện thoại, bấm <strong>\"📥 Nhập sao lưu\"</strong> và chọn file đó là xong!"
+        }
+    };
+
+    let currentLang = 'zh';
+
+    function toggleLang() {
+        currentLang = currentLang === 'zh' ? 'vi' : 'zh';
+        applyContent();
+    }
+
+    function applyContent() {
+        const d = dict[currentLang];
+        document.getElementById('t_title').innerText = d.title;
+        document.getElementById('btn_text').innerText = d.btn;
+        document.getElementById('t_intro').innerHTML = d.intro;
+        document.getElementById('t_h1').innerText = d.h1;
+        document.getElementById('t_c1_1').innerText = d.c1_1;
+        document.getElementById('t_c1_2').innerHTML = d.c1_2;
+        document.getElementById('t_c2_1').innerText = d.c2_1;
+        document.getElementById('t_c2_2').innerHTML = d.c2_2;
+        document.getElementById('t_example').innerText = d.example;
+        document.getElementById('t_img1_title').innerText = d.img1_title;
+        document.getElementById('t_time1').innerText = d.time1;
+        document.getElementById('t_time2').innerText = d.time2;
+        document.getElementById('t_time3').innerText = d.time3;
+        document.getElementById('t_img1_result').innerText = d.img1_result;
+        document.getElementById('t_h2').innerText = d.h2;
+        document.getElementById('t_s1_desc').innerText = d.s1_desc;
+        document.getElementById('t_s1_1').innerText = d.s1_1;
+        document.getElementById('t_s1_1_d').innerText = d.s1_1_d;
+        document.getElementById('t_s1_2').innerText = d.s1_2;
+        document.getElementById('t_s1_2_d').innerText = d.s1_2_d;
+        document.getElementById('t_h3').innerText = d.h3;
+        document.getElementById('t_s2_desc').innerHTML = d.s2_desc;
+        document.getElementById('t_s2_star').innerText = d.s2_star;
+        document.getElementById('t_s2_star_d').innerHTML = d.s2_star_d;
+        document.getElementById('t_img2_title').innerText = d.img2_title;
+        document.getElementById('t_img2_1').innerText = d.img2_1;
+        document.getElementById('t_img2_2').innerText = d.img2_2;
+        document.getElementById('t_h4').innerText = d.h4;
+        document.getElementById('t_s3_1').innerText = d.s3_1;
+        document.getElementById('t_s3_1_d').innerText = d.s3_1_d;
+        document.getElementById('t_s3_2').innerText = d.s3_2;
+        document.getElementById('t_s3_2_d').innerText = d.s3_2_d;
+        document.getElementById('t_img3_title').innerText = d.img3_title;
+        document.getElementById('t_img3_ot').innerText = d.img3_ot;
+        document.getElementById('t_h5').innerText = d.h5;
+        document.getElementById('t_s4_desc').innerText = d.s4_desc;
+        document.getElementById('t_s4_1').innerHTML = d.s4_1;
+        document.getElementById('t_s4_2').innerText = d.s4_2;
+        document.getElementById('t_s4_3').innerHTML = d.s4_3;
+    }
+
+    // Initialize content
+    applyContent();
+</script>
+
+</body>
+</html>
