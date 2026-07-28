@@ -105,6 +105,7 @@
             margin: 20px 0;
             font-family: monospace;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+            overflow-x: auto;
         }
 
         .mock-title {
@@ -159,7 +160,55 @@
         }
         .mock-input span { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
 
-        /* 圖示 3: 內聯編輯 */
+        /* 圖示 3: 全月圖月曆 (Full Month) */
+        .mock-cal-wrapper {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fff;
+            min-width: 480px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-family: sans-serif;
+        }
+        .mock-cal-toggle-box {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: #fff5f5; border: 1px solid #ffcdd2;
+            padding: 8px 12px; border-radius: 8px;
+            margin: 15px; color: var(--accent);
+            font-size: 14px; font-weight: bold;
+        }
+        .mock-cal-toggle-box input { margin: 0; width: 16px; height: 16px; accent-color: var(--accent); }
+        .mock-cal-grid {
+            display: grid; grid-template-columns: repeat(7, 1fr);
+            background: #f0f0f0; gap: 1px; border-top: 1px solid #e0e0e0;
+        }
+        .mock-cal-th {
+            background: var(--primary-light); text-align: center;
+            padding: 8px 0; font-size: 14px; font-weight: bold; color: var(--primary);
+        }
+        .mock-cal-td {
+            background: #fff; min-height: 55px; padding: 4px;
+            display: flex; flex-direction: column;
+        }
+        .mock-cal-td.faded > * { opacity: 0.3; }
+        .mock-cal-td-top {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            font-size: 13px; color: #555; font-weight: bold; margin-bottom: 4px;
+        }
+        .mock-badge {
+            padding: 2px 4px; border-radius: 4px; font-size: 10px; color: #fff; line-height: 1;
+        }
+        .b-rest { background: #2ecc71; }
+        .b-reg { background: var(--accent); }
+        .b-nat { background: #e74c3c; }
+        .mock-ot-pill {
+            background: #eef7ed; color: #27ae60; text-align: center;
+            font-size: 12px; font-weight: bold; padding: 2px 0;
+            border-radius: 4px; margin-top: auto;
+        }
+
+        /* 圖示 4: 內聯編輯 */
         .mock-table-row {
             display: flex; justify-content: space-between; align-items: center;
             background: #fff; padding: 15px 20px; border-radius: 8px;
@@ -178,6 +227,7 @@
             .header h1 { font-size: 22px; }
             .mock-grid { grid-template-columns: 1fr; }
             .mock-table-row { flex-direction: column; gap: 10px; text-align: center; }
+            .timeline { max-width: 100%; }
         }
     </style>
 </head>
@@ -192,7 +242,7 @@
     </div>
 
     <div class="section">
-        <p id="t_intro">這套系統專為排班制、夜班與輪班工作者設計，內建符合勞基法的防呆機制與智慧運算。只要掌握以下核心觀念，就能輕鬆、精準地試算每個月的薪水！</p>
+        <p id="t_intro">這套系統專為排班制、夜班與輪班工作者設計，內建符合勞基法的防呆機制與智慧運算。只要掌握以下核心觀念，就能輕鬆、精準地試算每個月的薪水！<strong>讓每一小時的努力，都有正確的薪資回報。</strong></p>
     </div>
 
     <div class="section">
@@ -253,13 +303,91 @@
     </div>
 
     <div class="section">
-        <h2 id="t_h4">📅 第三步：檢查與快速微調 (明細表直接編輯)</h2>
+        <h2 id="t_h4">📅 第三步：檢查與快速微調 (月曆總控與明細編輯)</h2>
         <ul>
-            <li><strong id="t_s3_1">全月圖：</strong><span id="t_s3_1_d">開啟「調休編輯模式」後，直接點擊月曆上的格子，就能在各種假別之間無限切換！</span></li>
-            <li><strong id="t_s3_2">明細表快速改時數：</strong><span id="t_s3_2_d">發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。</span></li>
+            <li><strong id="t_s3_1">📅 全月圖 (你的排班總控中心)：</strong><br><span id="t_s3_1_d">一眼掌握當月所有出勤、加班與請假狀況，絕不漏算任何一筆心血！這張圖只會亮起 26號～25號 的格子，非計薪週期會自動變透明。開啟「調休編輯模式」後，直接點擊月曆上的格子，還能在各種假別（平日/休/例/國/颱）之間無限切換，排班異動瞬間搞定！</span></li>
         </ul>
 
-        <!-- 圖片解說 3 -->
+        <!-- 圖片解說 3: 全月圖 -->
+        <div class="mock-image">
+            <div class="mock-title" id="t_img_cal_title">圖解：全月圖 (排班總控與出勤一覽)</div>
+            <div class="mock-cal-wrapper">
+                <div class="mock-cal-toggle-box">
+                    <input type="checkbox" disabled checked>
+                    <span id="t_img_cal_toggle">✏️ 開啟調休編輯模式</span>
+                </div>
+                <div class="mock-cal-grid">
+                    <div class="mock-cal-th" id="t_w0">日</div>
+                    <div class="mock-cal-th" id="t_w1">一</div>
+                    <div class="mock-cal-th" id="t_w2">二</div>
+                    <div class="mock-cal-th" id="t_w3">三</div>
+                    <div class="mock-cal-th" id="t_w4">四</div>
+                    <div class="mock-cal-th" id="t_w5">五</div>
+                    <div class="mock-cal-th" id="t_w6">六</div>
+                    
+                    <!-- Row 1 -->
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>5/26</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>27</span></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>28</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>29</span><span class="mock-badge b-rest trans-rest">休</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>30</span><span class="mock-badge b-reg trans-reg">例</span></div></div>
+                    
+                    <!-- Row 2 -->
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>31</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>6/1</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>2</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>3</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>4</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>5</span><span class="mock-badge b-rest trans-rest">休</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>6</span><span class="mock-badge b-reg trans-reg">例</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    
+                    <!-- Row 3 -->
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>7</span></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>8</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>9</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>10</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>11</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>12</span><span class="mock-badge b-rest trans-rest">休</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>13</span><span class="mock-badge b-reg trans-reg">例</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    
+                    <!-- Row 4 -->
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>14</span></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>15</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>16</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>17</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>18</span><span class="mock-badge b-nat trans-nat">國</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>19</span><span class="mock-badge b-rest trans-rest">休</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>20</span><span class="mock-badge b-reg trans-reg">例</span></div><div class="mock-ot-pill">+10.5</div></div>
+                    
+                    <!-- Row 5 -->
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>21</span></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>22</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>23</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>24</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"><span>25</span></div><div class="mock-ot-pill">+2.5</div></div>
+                    <div class="mock-cal-td faded"><div class="mock-cal-td-top"><span>26</span><span class="mock-badge b-rest trans-rest">休</span></div></div>
+                    <div class="mock-cal-td faded"><div class="mock-cal-td-top"><span>27</span><span class="mock-badge b-reg trans-reg">例</span></div></div>
+
+                    <!-- Row 6 -->
+                    <div class="mock-cal-td faded"><div class="mock-cal-td-top"><span>28</span></div></div>
+                    <div class="mock-cal-td faded"><div class="mock-cal-td-top"><span>29</span></div></div>
+                    <div class="mock-cal-td faded"><div class="mock-cal-td-top"><span>30</span></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"></div></div>
+                    <div class="mock-cal-td"><div class="mock-cal-td-top"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <ul>
+            <li><strong id="t_s3_2">明細表快速改時數：</strong><br><span id="t_s3_2_d">發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。</span></li>
+        </ul>
+
+        <!-- 圖片解說 4: 明細編輯 -->
         <div class="mock-image">
             <div class="mock-title" id="t_img3_title">圖解：明細表「直接點擊修改」功能</div>
             <div class="mock-table-row">
@@ -288,7 +416,7 @@
         zh: {
             title: "薪資與加班費結算系統 - 使用指南",
             btn: "Đổi sang Tiếng Việt",
-            intro: "這套系統專為排班制、夜班與輪班工作者設計，內建符合勞基法的防呆機制與智慧運算。只要掌握以下核心觀念，就能輕鬆、精準地試算每個月的薪水！",
+            intro: "這套系統專為排班制、夜班與輪班工作者設計，內建符合勞基法的防呆機制與智慧運算。只要掌握以下核心觀念，就能輕鬆、精準地試算每個月的薪水！<strong>讓每一小時的努力，都有正確的薪資回報。</strong>",
             h1: "💡 必讀：兩大核心觀念",
             c1_1: "計薪週期（26 號 ～ 25 號）：",
             c1_2: "系統預設每個月的結算週期為 <strong>上個月的 26 號到當月的 25 號</strong>。全月圖與所有結算金額，都會嚴格鎖定在這個區間內。",
@@ -310,9 +438,15 @@
             s2_star_d: "當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！",
             img2_title: "圖解：夜班颱風假 雙格輸入 UI",
             img2_1: "颱風加班時數", img2_2: "平日加班時數",
-            h4: "📅 第三步：檢查與快速微調 (明細表直接編輯)",
-            s3_1: "全月圖：", s3_1_d: "開啟「調休編輯模式」後，直接點擊月曆上的格子，就能在各種假別之間無限切換！",
-            s3_2: "明細表快速改時數：", s3_2_d: "發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。",
+            h4: "📅 第三步：檢查與快速微調 (月曆總控與明細編輯)",
+            s3_1: "📅 全月圖 (你的排班總控中心)：", 
+            s3_1_d: "一眼掌握當月所有出勤、加班與請假狀況，絕不漏算任何一筆心血！這張圖只會亮起 26號～25號 的格子，非計薪週期會自動變透明。開啟「調休編輯模式」後，直接點擊月曆上的格子，還能在各種假別（平日/休/例/國/颱）之間無限切換，排班異動瞬間搞定！",
+            img_cal_title: "圖解：全月圖 (排班總控與出勤一覽)",
+            img_cal_toggle: "✏️ 開啟調休編輯模式",
+            w0: "日", w1: "一", w2: "二", w3: "三", w4: "四", w5: "五", w6: "六",
+            b_nat: "國", b_rest: "休", b_reg: "例",
+            s3_2: "明細表快速改時數：", 
+            s3_2_d: "發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。",
             img3_title: "圖解：明細表「直接點擊修改」功能",
             img3_ot: "加班",
             h5: "☁️ 第四步：跨裝置雲端同步",
@@ -324,7 +458,7 @@
         vi: {
             title: "Hệ Thống Tính Lương & Tăng Ca - Hướng Dẫn",
             btn: "切換為繁體中文",
-            intro: "Hệ thống này được thiết kế dành riêng cho người làm việc theo ca, ca đêm. Tích hợp cơ chế tính toán thông minh theo luật. Chỉ cần nắm vững các khái niệm sau, bạn có thể tính lương dễ dàng và chính xác!",
+            intro: "Hệ thống này được thiết kế dành riêng cho người làm việc theo ca, ca đêm. Tích hợp cơ chế tính toán thông minh theo luật. Chỉ cần nắm vững các khái niệm sau, bạn có thể tính lương dễ dàng và chính xác! <strong>Để mỗi giờ làm việc chăm chỉ đều nhận được mức lương xứng đáng.</strong>",
             h1: "💡 Bắt buộc đọc: 2 Khái niệm cốt lõi",
             c1_1: "Chu kỳ tính lương (Ngày 26 ~ 25):",
             c1_2: "Hệ thống mặc định chu kỳ kết toán là <strong>từ ngày 26 tháng trước đến ngày 25 tháng này</strong>. Lịch và mọi số tiền đều được khóa chặt trong khoảng thời gian này.",
@@ -346,9 +480,15 @@
             s2_star_d: "Khi chọn \"Ca đêm\" và gặp ngày \"Nghỉ bão\", hệ thống sẽ tự mở rộng thành <strong>lưới 2x2</strong> để bạn nhập 2 mức giờ tăng ca với hệ số khác nhau!",
             img2_title: "Minh họa: Giao diện nhập 2 mức giờ (Ca đêm bão)",
             img2_1: "Giờ TC bão", img2_2: "Giờ TC thường",
-            h4: "📅 Bước 3: Kiểm tra & Chỉnh sửa (Sửa trực tiếp)",
-            s3_1: "Lịch chuyên cần:", s3_1_d: "Bật \"Chế độ chỉnh sửa\", bấm trực tiếp vào ô trên lịch để đổi linh hoạt giữa các loại ngày nghỉ!",
-            s3_2: "Sửa nhanh số giờ:", s3_2_d: "Nhập sai giờ? Không cần xóa! Chỉ cần nhập số đúng vào \"ô số giờ\" trong bảng chi tiết, tổng tiền sẽ tự động cập nhật trong 0.1 giây.",
+            h4: "📅 Bước 3: Kiểm tra & Chỉnh sửa",
+            s3_1: "📅 Lịch toàn tháng (Trung tâm kiểm soát):", 
+            s3_1_d: "Nắm bắt toàn bộ tình trạng đi làm, tăng ca và nghỉ phép trong tháng chỉ bằng một cái nhìn! Bật \"Chế độ chỉnh sửa\", bấm trực tiếp vào ô trên lịch để đổi linh hoạt giữa các loại ngày nghỉ, xử lý thay đổi ca làm việc trong nháy mắt!",
+            img_cal_title: "Minh họa: Lịch toàn tháng (Kiểm soát ca làm)",
+            img_cal_toggle: "✏️ Chế độ chỉnh sửa lịch",
+            w0: "CN", w1: "T2", w2: "T3", w3: "T4", w4: "T5", w5: "T6", w6: "T7",
+            b_nat: "Q", b_rest: "N", b_reg: "L",
+            s3_2: "Sửa nhanh số giờ:", 
+            s3_2_d: "Nhập sai giờ? Không cần xóa! Chỉ cần nhập số đúng vào \"ô số giờ\" trong bảng chi tiết, tổng tiền sẽ tự động cập nhật trong 0.1 giây.",
             img3_title: "Minh họa: Tính năng \"Bấm để sửa\" trong bảng",
             img3_ot: "Tăng ca",
             h5: "☁️ Bước 4: Đồng bộ đám mây đa thiết bị",
@@ -395,11 +535,29 @@
         document.getElementById('t_img2_title').innerText = d.img2_title;
         document.getElementById('t_img2_1').innerText = d.img2_1;
         document.getElementById('t_img2_2').innerText = d.img2_2;
+        
+        // Step 3 updates
         document.getElementById('t_h4').innerText = d.h4;
         document.getElementById('t_s3_1').innerText = d.s3_1;
         document.getElementById('t_s3_1_d').innerText = d.s3_1_d;
         document.getElementById('t_s3_2').innerText = d.s3_2;
         document.getElementById('t_s3_2_d').innerText = d.s3_2_d;
+        
+        // Calendar Mockup translation
+        document.getElementById('t_img_cal_title').innerText = d.img_cal_title;
+        document.getElementById('t_img_cal_toggle').innerText = d.img_cal_toggle;
+        document.getElementById('t_w0').innerText = d.w0;
+        document.getElementById('t_w1').innerText = d.w1;
+        document.getElementById('t_w2').innerText = d.w2;
+        document.getElementById('t_w3').innerText = d.w3;
+        document.getElementById('t_w4').innerText = d.w4;
+        document.getElementById('t_w5').innerText = d.w5;
+        document.getElementById('t_w6').innerText = d.w6;
+        
+        document.querySelectorAll('.trans-nat').forEach(el => el.innerText = d.b_nat);
+        document.querySelectorAll('.trans-rest').forEach(el => el.innerText = d.b_rest);
+        document.querySelectorAll('.trans-reg').forEach(el => el.innerText = d.b_reg);
+
         document.getElementById('t_img3_title').innerText = d.img3_title;
         document.getElementById('t_img3_ot').innerText = d.img3_ot;
         document.getElementById('t_h5').innerText = d.h5;
