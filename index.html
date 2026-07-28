@@ -311,24 +311,7 @@
         </ul>
         
         <div class="highlight-box">
-            <span id="t_example">範例：你是打夜班，7/15 晚上 20:30 上班，一路加班到 7/16 早上 08:20 才下班。請全部記在「7/15」，系統會自動幫你算好，絕對不會把帳切斷跑到隔天。</span>
-        </div>
-
-        <!-- 圖片解說 1 -->
-        <div class="mock-image">
-            <div class="mock-title" id="t_img1_title">圖解：夜班跨日打卡邏輯</div>
-            <div class="timeline">
-                <div class="point">
-                    <div class="point-label">7/15<br><span class="point-time" id="t_time1">20:30 上班</span></div>
-                </div>
-                <div class="point" style="background: var(--accent); border-color: var(--accent);">
-                    <div class="point-label">7/16<br><span class="point-time" id="t_time2">00:00 跨夜</span></div>
-                </div>
-                <div class="point">
-                    <div class="point-label">7/16<br><span class="point-time" id="t_time3">08:20 下班</span></div>
-                </div>
-            </div>
-            <div class="result-box" id="t_img1_result">✅ 全部歸屬出勤日：7月15日</div>
+            <span id="t_example">範例：所有的打卡請以 <strong>「上班當天」</strong> 的日期為準，確保系統能精準歸屬計薪月份。</span>
         </div>
     </div>
 
@@ -336,7 +319,7 @@
         <h2 id="t_h2">🚀 第一步：基礎薪資設定 (每月只需設定一次)</h2>
         <p id="t_s1_desc">當你第一次進入系統，或是每個月薪水/班別有異動時，請先點開左側區塊進行設定：</p>
         <ul>
-            <li><strong id="t_s1_1">該月薪資結構：</strong><span id="t_s1_1_d">如果你這個月上夜班，請勾選「🌙 夜班」。選擇你的「輪班班別」，系統會自動判斷平日與休假。加入全勤等津貼，系統會用來墊高你的「加班費時薪」。</span></li>
+            <li><strong id="t_s1_1">該月薪資結構：</strong><span id="t_s1_1_d">選擇你的「輪班班別」，系統會自動判斷平日與休假。加入全勤等津貼，系統會用來墊高你的「加班費時薪」。</span></li>
             <li><strong id="t_s1_2">固定扣除項目：</strong><span id="t_s1_2_d">輸入勞保、健保等金額，結算時會自動扣除。</span></li>
         </ul>
     </div>
@@ -456,10 +439,34 @@
     <!-- 獨立的夜班特殊功能收折區塊 -->
     <div class="section">
         <details class="night-shift-details">
-            <summary id="t_night_summary">🌙 夜班專屬說明：特殊神級功能 (點擊展開)</summary>
+            <summary id="t_night_summary">🌙 夜班專屬說明：跨日打卡與颱風假 (點擊展開)</summary>
             <div class="details-content">
+                
+                <h3 id="t_night_p1_title" style="color: var(--primary); margin-top: 0;">1. 啟用夜班模式與津貼</h3>
+                <p id="t_night_p1_desc">在「1. 該月薪結構」中勾選「🌙 夜班」，系統會自動為您墊高夜班時薪，並依據出勤天數自動計算「夜班出勤津貼」。</p>
+
+                <h3 id="t_night_p2_title" style="color: var(--primary);">2. 跨日打卡邏輯：帳絕對不切斷</h3>
+                <p id="t_night_p2_desc">晚上上班、隔天早上才下班怎麼記？<strong>請將時數全部記在「上班當天」！</strong>系統會自動將跨夜工時歸屬在正確的日期，絕對不會把帳切斷跑到隔天。</p>
+                
+                <!-- 圖片解說 1 -->
+                <div class="mock-image">
+                    <div class="mock-title" id="t_img1_title">圖解：夜班跨日打卡邏輯</div>
+                    <div class="timeline">
+                        <div class="point">
+                            <div class="point-label">7/15<br><span class="point-time" id="t_time1">20:30 上班</span></div>
+                        </div>
+                        <div class="point" style="background: var(--accent); border-color: var(--accent);">
+                            <div class="point-label">7/16<br><span class="point-time" id="t_time2">00:00 跨夜</span></div>
+                        </div>
+                        <div class="point">
+                            <div class="point-label">7/16<br><span class="point-time" id="t_time3">08:20 下班</span></div>
+                        </div>
+                    </div>
+                    <div class="result-box" id="t_img1_result">✅ 全部歸屬出勤日：7月15日</div>
+                </div>
+
+                <h3 id="t_night_p3_title" style="color: var(--primary);">3. 雙軌時數：夜班 ＋ 颱風假</h3>
                 <div class="highlight-box">
-                    <strong id="t_s2_star">🌟 特殊神級功能：夜班 ＋ 颱風假</strong><br>
                     <span id="t_s2_star_d">當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！</span>
                 </div>
 
@@ -471,6 +478,7 @@
                         <div class="mock-input"><span id="t_img2_2">平日加班時數</span>2.5 H</div>
                     </div>
                 </div>
+
             </div>
         </details>
     </div>
@@ -488,23 +496,15 @@
             c1_2: "系統預設每個月的結算週期為 <strong>上個月的 26 號到當月的 25 號</strong>。全月圖與所有結算金額，都會嚴格鎖定在這個區間內。",
             c2_1: "出勤日 (workDate) 規則：",
             c2_2: "所有的打卡請以 <strong>「上班當天」</strong> 的日期為準。",
-            example: "範例：你是打夜班，7/15 晚上 20:30 上班，一路加班到 7/16 早上 08:20 才下班。請全部記在「7/15」，系統會自動幫你算好，絕對不會把帳切斷跑到隔天。",
-            img1_title: "圖解：夜班跨日打卡邏輯",
-            time1: "20:30 上班", time2: "00:00 跨夜", time3: "08:20 下班",
-            img1_result: "✅ 全部歸屬出勤日：7月15日",
+            example: "所有的打卡請以 <strong>「上班當天」</strong> 的日期為準，確保系統能精準歸屬計薪月份。",
             h2: "🚀 第一步：基礎薪資設定 (每月只需設定一次)",
             s1_desc: "當你第一次進入系統，或是每個月薪水/班別有異動時，請先點開左側區塊進行設定：",
             s1_1: "該月薪資結構：",
-            s1_1_d: "如果你這個月上夜班，請勾選「🌙 夜班」。選擇你的「輪班班別」，系統會自動判斷平日與休假。加入全勤等津貼，系統會用來墊高你的「加班費時薪」。",
+            s1_1_d: "選擇你的「輪班班別」，系統會自動判斷平日與休假。加入全勤等津貼，系統會用來墊高你的「加班費時薪」。",
             s1_2: "固定扣除項目：",
             s1_2_d: "輸入勞保、健保等金額，結算時會自動扣除。",
             h3: "📝 第二步：日常打卡（每日加班 / 請假申報）",
             s2_desc: "這是你每天最常使用的區塊，操作非常簡單：選擇 <strong>➕ 加班</strong> 或 <strong>➖ 請假</strong>，選擇日期，輸入時數即可。",
-            night_summary: "🌙 夜班專屬說明：特殊神級功能 (點擊展開)",
-            s2_star: "🌟 特殊神級功能：夜班 ＋ 颱風假",
-            s2_star_d: "當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！",
-            img2_title: "圖解：夜班颱風假 雙格輸入 UI",
-            img2_1: "颱風加班時數", img2_2: "平日加班時數",
             h4: "📅 第三步：檢查與快速微調 (月曆總控與明細編輯)",
             s3_1: "📅 全月圖 (你的排班總控中心)：", 
             s3_1_d: "一眼掌握當月所有出勤、加班與請假狀況，絕不漏算任何一筆心血！這張圖只會亮起 26號～25號 的格子，非計薪週期會自動變透明。開啟「調休編輯模式」後，直接點擊月曆上的格子，還能在各種假別（平日/休/例/國/颱）之間無限切換，排班異動瞬間搞定！",
@@ -520,7 +520,21 @@
             s4_desc: "這套系統不依賴伺服器，保護隱私。強烈建議使用 <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>Chrome 瀏覽器</strong> 來進行以下跨裝置同步操作：",
             s4_1: "在電腦上點擊 <strong>「📤 匯出備份檔」</strong>，並將下載的檔案上傳至您的 <img src='https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' class='app-icon' alt='Drive'><strong>Google 雲端硬碟 (Google Drive)</strong>。",
             s4_2: "在手機上同樣使用 <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>Chrome 瀏覽器</strong> 打開本系統。",
-            s4_3: "點擊 <strong>「📥 匯入雲端備份」</strong>，從 Google 雲端硬碟選擇剛剛的檔案，即可無縫接軌！"
+            s4_3: "點擊 <strong>「📥 匯入雲端備份」</strong>，從 Google 雲端硬碟選擇剛剛的檔案，即可無縫接軌！",
+            
+            // Night Shift Section
+            night_summary: "🌙 夜班專屬說明：跨日打卡與颱風假 (點擊展開)",
+            night_p1_title: "1. 啟用夜班模式與津貼",
+            night_p1_desc: "在「1. 該月薪資結構」中勾選「🌙 夜班」，系統會自動為您墊高夜班時薪，並依據出勤天數自動計算「夜班出勤津貼」。",
+            night_p2_title: "2. 跨日打卡邏輯：帳絕對不切斷",
+            night_p2_desc: "晚上上班、隔天早上才下班怎麼記？<strong>請將時數全部記在「上班當天」！</strong>系統會自動將跨夜工時歸屬在正確的日期，絕對不會把帳切斷跑到隔天。",
+            img1_title: "圖解：夜班跨日打卡邏輯",
+            time1: "20:30 上班", time2: "00:00 跨夜", time3: "08:20 下班",
+            img1_result: "✅ 全部歸屬出勤日：7月15日",
+            night_p3_title: "3. 雙軌時數：夜班 ＋ 颱風假",
+            s2_star_d: "當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！",
+            img2_title: "圖解：夜班颱風假 雙格輸入 UI",
+            img2_1: "颱風加班時數", img2_2: "平日加班時數",
         },
         vi: {
             title: "Hệ Thống Tính Lương & Tăng Ca - Hướng Dẫn",
@@ -531,23 +545,15 @@
             c1_2: "Hệ thống mặc định chu kỳ kết toán là <strong>từ ngày 26 tháng trước đến ngày 25 tháng này</strong>. Lịch và mọi số tiền đều được khóa chặt trong khoảng thời gian này.",
             c2_1: "Quy tắc Ngày đi làm (workDate):",
             c2_2: "Tất cả việc chấm công phải dựa vào ngày <strong>bắt đầu ca làm việc</strong>.",
-            example: "Ví dụ: Bạn làm ca đêm, đi làm lúc 20:30 tối ngày 15/7, tăng ca liên tục đến 08:20 sáng ngày 16/7 mới tan ca. Vui lòng ghi nhận toàn bộ vào \"15/7\", hệ thống sẽ tự động tính toán, tuyệt đối không bị cắt ngang sang ngày hôm sau.",
-            img1_title: "Minh họa: Logic chấm công ca đêm qua ngày",
-            time1: "20:30 Vào ca", time2: "00:00 Qua đêm", time3: "08:20 Tan ca",
-            img1_result: "✅ Tất cả tính vào ngày: 15 tháng 7",
+            example: "Tất cả việc chấm công phải dựa vào ngày <strong>bắt đầu ca làm việc</strong> để đảm bảo hệ thống tính chính xác tháng nhận lương.",
             h2: "🚀 Bước 1: Cài đặt lương cơ bản (Chỉ 1 lần/tháng)",
             s1_desc: "Khi mới sử dụng hoặc có thay đổi lương/ca, hãy mở phần bên trái để cài đặt:",
             s1_1: "Cấu trúc lương:",
-            s1_1_d: "Nếu làm ca đêm, hãy chọn \"🌙 Ca đêm\". Chọn \"Ca làm việc\", hệ thống sẽ tự chia ngày thường và ngày nghỉ. Thêm các phụ cấp (chuyên cần...), hệ thống sẽ dùng nó để nâng mức \"lương giờ tăng ca\" của bạn.",
+            s1_1_d: "Chọn \"Ca làm việc\", hệ thống sẽ tự chia ngày thường và ngày nghỉ. Thêm các phụ cấp (chuyên cần...), hệ thống sẽ dùng nó để nâng mức \"lương giờ tăng ca\" của bạn.",
             s1_2: "Khấu trừ cố định:",
             s1_2_d: "Nhập tiền bảo hiểm... hệ thống sẽ tự trừ khi kết toán.",
             h3: "📝 Bước 2: Chấm công (Tăng ca / Nghỉ phép)",
             s2_desc: "Đây là phần bạn dùng nhiều nhất: Chọn <strong>➕ Tăng ca</strong> hoặc <strong>➖ Nghỉ phép</strong>, chọn ngày, nhập số giờ là xong.",
-            night_summary: "🌙 Dành riêng cho ca đêm: Chức năng đặc biệt (Bấm để mở)",
-            s2_star: "🌟 Chức năng đặc biệt: Ca đêm + Nghỉ bão",
-            s2_star_d: "Khi chọn \"Ca đêm\" và gặp ngày \"Nghỉ bão\", hệ thống sẽ tự mở rộng thành <strong>lưới 2x2</strong> để bạn nhập 2 mức giờ tăng ca với hệ số khác nhau!",
-            img2_title: "Minh họa: Giao diện nhập 2 mức giờ (Ca đêm bão)",
-            img2_1: "Giờ TC bão", img2_2: "Giờ TC thường",
             h4: "📅 Bước 3: Kiểm tra & Chỉnh sửa",
             s3_1: "📅 Lịch toàn tháng (Trung tâm kiểm soát):", 
             s3_1_d: "Nắm bắt toàn bộ tình trạng đi làm, tăng ca và nghỉ phép trong tháng chỉ bằng một cái nhìn! Bật \"Chế độ chỉnh sửa\", bấm trực tiếp vào ô trên lịch để đổi linh hoạt giữa các loại ngày nghỉ, xử lý thay đổi ca làm việc trong nháy mắt!",
@@ -563,7 +569,21 @@
             s4_desc: "Hệ thống không dùng máy chủ để bảo mật thông tin. Khuyên dùng <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>trình duyệt Chrome</strong> để thực hiện đồng bộ hóa qua các bước sau:",
             s4_1: "Trên máy tính bấm <strong>\"📤 Xuất bản sao lưu\"</strong>, sau đó tải file vừa tải xuống lên <img src='https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' class='app-icon' alt='Drive'><strong>Google Drive</strong>.",
             s4_2: "Mở hệ thống này trên điện thoại cũng bằng <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>trình duyệt Chrome</strong>.",
-            s4_3: "Bấm <strong>\"📥 Nhập sao lưu đám mây\"</strong>, chọn file sao lưu từ Google Drive để đồng bộ liền mạch!"
+            s4_3: "Bấm <strong>\"📥 Nhập sao lưu đám mây\"</strong>, chọn file sao lưu từ Google Drive để đồng bộ liền mạch!",
+
+            // Night Shift Section
+            night_summary: "🌙 Dành riêng cho ca đêm: Chấm công qua ngày & Bão (Bấm để mở)",
+            night_p1_title: "1. Bật chế độ Ca đêm & Phụ cấp",
+            night_p1_desc: "Đánh dấu vào \"🌙 Ca đêm\" trong phần 1. Hệ thống sẽ tự động tăng lương giờ ca đêm và tính \"Phụ cấp ca đêm\" dựa trên số ngày đi làm.",
+            night_p2_title: "2. Logic chấm công qua ngày: Không bị cắt ngang",
+            night_p2_desc: "Đi làm buổi tối, sáng hôm sau mới tan ca thì tính sao? <strong>Vui lòng ghi nhận toàn bộ số giờ vào \"Ngày bắt đầu ca\"!</strong> Hệ thống sẽ tự động xử lý, tuyệt đối không bị cắt ngang sang ngày hôm sau.",
+            img1_title: "Minh họa: Logic chấm công ca đêm qua ngày",
+            time1: "20:30 Vào ca", time2: "00:00 Qua đêm", time3: "08:20 Tan ca",
+            img1_result: "✅ Tất cả tính vào ngày: 15 tháng 7",
+            night_p3_title: "3. Chức năng đặc biệt: Ca đêm + Nghỉ bão",
+            s2_star_d: "Khi chọn \"Ca đêm\" và gặp ngày \"Nghỉ bão\", hệ thống sẽ tự mở rộng thành <strong>lưới 2x2</strong> để bạn nhập 2 mức giờ tăng ca với hệ số khác nhau!",
+            img2_title: "Minh họa: Giao diện nhập 2 mức giờ (Ca đêm bão)",
+            img2_1: "Giờ TC bão", img2_2: "Giờ TC thường",
         }
     };
 
@@ -579,31 +599,23 @@
         document.getElementById('t_title').innerText = d.title;
         document.getElementById('btn_text').innerText = d.btn;
         document.getElementById('t_intro').innerHTML = d.intro;
+        
         document.getElementById('t_h1').innerText = d.h1;
         document.getElementById('t_c1_1').innerText = d.c1_1;
         document.getElementById('t_c1_2').innerHTML = d.c1_2;
         document.getElementById('t_c2_1').innerText = d.c2_1;
         document.getElementById('t_c2_2').innerHTML = d.c2_2;
-        document.getElementById('t_example').innerText = d.example;
-        document.getElementById('t_img1_title').innerText = d.img1_title;
-        document.getElementById('t_time1').innerText = d.time1;
-        document.getElementById('t_time2').innerText = d.time2;
-        document.getElementById('t_time3').innerText = d.time3;
-        document.getElementById('t_img1_result').innerText = d.img1_result;
+        document.getElementById('t_example').innerHTML = d.example;
+        
         document.getElementById('t_h2').innerText = d.h2;
         document.getElementById('t_s1_desc').innerText = d.s1_desc;
         document.getElementById('t_s1_1').innerText = d.s1_1;
         document.getElementById('t_s1_1_d').innerText = d.s1_1_d;
         document.getElementById('t_s1_2').innerText = d.s1_2;
         document.getElementById('t_s1_2_d').innerText = d.s1_2_d;
+        
         document.getElementById('t_h3').innerText = d.h3;
         document.getElementById('t_s2_desc').innerHTML = d.s2_desc;
-        document.getElementById('t_night_summary').innerText = d.night_summary;
-        document.getElementById('t_s2_star').innerText = d.s2_star;
-        document.getElementById('t_s2_star_d').innerHTML = d.s2_star_d;
-        document.getElementById('t_img2_title').innerText = d.img2_title;
-        document.getElementById('t_img2_1').innerText = d.img2_1;
-        document.getElementById('t_img2_2').innerText = d.img2_2;
         
         document.getElementById('t_h4').innerText = d.h4;
         document.getElementById('t_s3_1').innerText = d.s3_1;
@@ -633,6 +645,23 @@
         document.getElementById('t_s4_1').innerHTML = d.s4_1;
         document.getElementById('t_s4_2').innerHTML = d.s4_2;
         document.getElementById('t_s4_3').innerHTML = d.s4_3;
+
+        // Night Shift Section
+        document.getElementById('t_night_summary').innerText = d.night_summary;
+        document.getElementById('t_night_p1_title').innerText = d.night_p1_title;
+        document.getElementById('t_night_p1_desc').innerText = d.night_p1_desc;
+        document.getElementById('t_night_p2_title').innerText = d.night_p2_title;
+        document.getElementById('t_night_p2_desc').innerHTML = d.night_p2_desc;
+        document.getElementById('t_img1_title').innerText = d.img1_title;
+        document.getElementById('t_time1').innerText = d.time1;
+        document.getElementById('t_time2').innerText = d.time2;
+        document.getElementById('t_time3').innerText = d.time3;
+        document.getElementById('t_img1_result').innerText = d.img1_result;
+        document.getElementById('t_night_p3_title').innerText = d.night_p3_title;
+        document.getElementById('t_s2_star_d').innerHTML = d.s2_star_d;
+        document.getElementById('t_img2_title').innerText = d.img2_title;
+        document.getElementById('t_img2_1').innerText = d.img2_1;
+        document.getElementById('t_img2_2').innerText = d.img2_2;
     }
 
     applyContent();
