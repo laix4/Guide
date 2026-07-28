@@ -219,7 +219,65 @@
             font-weight: bold; color: var(--primary); font-size: 16px;
         }
 
-        ul { padding-left: 20px; }
+        /* 夜班專屬說明收折區塊 */
+        .night-shift-details {
+            background: #fff;
+            border: 2px dashed var(--primary-light);
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-top: 40px;
+            transition: all 0.3s;
+        }
+        .night-shift-details:hover {
+            border-color: var(--primary);
+            background: rgba(94, 72, 132, 0.02);
+        }
+        .night-shift-details summary {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            outline: none;
+            user-select: none;
+        }
+        .night-shift-details summary::-webkit-details-marker {
+            display: none;
+        }
+        .night-shift-details summary::after {
+            content: '▼';
+            font-size: 14px;
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+        .night-shift-details[open] summary::after {
+            transform: rotate(180deg);
+        }
+        .night-shift-details .details-content {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed #dcdfe6;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 內聯圖示 */
+        .app-icon {
+            width: 22px;
+            height: 22px;
+            vertical-align: middle;
+            margin: 0 4px;
+            transform: translateY(-2px);
+        }
+
+        ul, ol { padding-left: 20px; }
         li { margin-bottom: 10px; }
 
         @media (max-width: 600px) {
@@ -286,20 +344,6 @@
     <div class="section">
         <h2 id="t_h3">📝 第二步：日常打卡（每日加班 / 請假申報）</h2>
         <p id="t_s2_desc">這是你每天最常使用的區塊，操作非常簡單：選擇 <strong>➕ 加班</strong> 或 <strong>➖ 請假</strong>，選擇日期，輸入時數即可。</p>
-        
-        <div class="highlight-box">
-            <strong id="t_s2_star">🌟 特殊神級功能：夜班 ＋ 颱風假</strong><br>
-            <span id="t_s2_star_d">當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！</span>
-        </div>
-
-        <!-- 圖片解說 2 -->
-        <div class="mock-image">
-            <div class="mock-title" id="t_img2_title">圖解：夜班颱風假 雙格輸入 UI</div>
-            <div class="mock-grid">
-                <div class="mock-input"><span id="t_img2_1">颱風加班時數</span>3.5 H</div>
-                <div class="mock-input"><span id="t_img2_2">平日加班時數</span>2.5 H</div>
-            </div>
-        </div>
     </div>
 
     <div class="section">
@@ -401,12 +445,34 @@
 
     <div class="section">
         <h2 id="t_h5">☁️ 第四步：跨裝置雲端同步</h2>
-        <p id="t_s4_desc">這套系統不依賴伺服器，保護隱私。如果想把電腦資料轉到手機：</p>
+        <p id="t_s4_desc">這套系統不依賴伺服器，保護隱私。強烈建議使用 <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>Chrome 瀏覽器</strong> 來進行以下跨裝置同步操作：</p>
         <ol>
-            <li id="t_s4_1">在電腦上點擊 <strong>「📤 匯出備份檔」</strong>。</li>
-            <li id="t_s4_2">把檔案傳到手機（透過 Line/Email）。</li>
-            <li id="t_s4_3">用手機打開系統，點擊 <strong>「📥 匯入雲端備份」</strong>，選擇該檔案即可無縫接軌！</li>
+            <li id="t_s4_1">在電腦上點擊 <strong>「📤 匯出備份檔」</strong>，並將下載的檔案上傳至您的 <img src='https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' class='app-icon' alt='Drive'><strong>Google 雲端硬碟 (Google Drive)</strong>。</li>
+            <li id="t_s4_2">在手機上同樣使用 <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>Chrome 瀏覽器</strong> 打開本系統。</li>
+            <li id="t_s4_3">點擊 <strong>「📥 匯入雲端備份」</strong>，從 Google 雲端硬碟選擇剛剛的檔案，即可無縫接軌！</li>
         </ol>
+    </div>
+
+    <!-- 獨立的夜班特殊功能收折區塊 -->
+    <div class="section">
+        <details class="night-shift-details">
+            <summary id="t_night_summary">🌙 夜班專屬說明：特殊神級功能 (點擊展開)</summary>
+            <div class="details-content">
+                <div class="highlight-box">
+                    <strong id="t_s2_star">🌟 特殊神級功能：夜班 ＋ 颱風假</strong><br>
+                    <span id="t_s2_star_d">當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！</span>
+                </div>
+
+                <!-- 圖片解說 2 -->
+                <div class="mock-image">
+                    <div class="mock-title" id="t_img2_title">圖解：夜班颱風假 雙格輸入 UI</div>
+                    <div class="mock-grid">
+                        <div class="mock-input"><span id="t_img2_1">颱風加班時數</span>3.5 H</div>
+                        <div class="mock-input"><span id="t_img2_2">平日加班時數</span>2.5 H</div>
+                    </div>
+                </div>
+            </div>
+        </details>
     </div>
 
 </div>
@@ -434,6 +500,7 @@
             s1_2_d: "輸入勞保、健保等金額，結算時會自動扣除。",
             h3: "📝 第二步：日常打卡（每日加班 / 請假申報）",
             s2_desc: "這是你每天最常使用的區塊，操作非常簡單：選擇 <strong>➕ 加班</strong> 或 <strong>➖ 請假</strong>，選擇日期，輸入時數即可。",
+            night_summary: "🌙 夜班專屬說明：特殊神級功能 (點擊展開)",
             s2_star: "🌟 特殊神級功能：夜班 ＋ 颱風假",
             s2_star_d: "當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！",
             img2_title: "圖解：夜班颱風假 雙格輸入 UI",
@@ -450,10 +517,10 @@
             img3_title: "圖解：明細表「直接點擊修改」功能",
             img3_ot: "加班",
             h5: "☁️ 第四步：跨裝置雲端同步",
-            s4_desc: "這套系統不依賴伺服器，保護隱私。如果想把電腦資料轉到手機：",
-            s4_1: "在電腦上點擊 <strong>「📤 匯出備份檔」</strong>。",
-            s4_2: "把檔案傳到手機（透過 Line/Email）。",
-            s4_3: "用手機打開系統，點擊 <strong>「📥 匯入雲端備份」</strong>，選擇該檔案即可無縫接軌！"
+            s4_desc: "這套系統不依賴伺服器，保護隱私。強烈建議使用 <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>Chrome 瀏覽器</strong> 來進行以下跨裝置同步操作：",
+            s4_1: "在電腦上點擊 <strong>「📤 匯出備份檔」</strong>，並將下載的檔案上傳至您的 <img src='https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' class='app-icon' alt='Drive'><strong>Google 雲端硬碟 (Google Drive)</strong>。",
+            s4_2: "在手機上同樣使用 <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>Chrome 瀏覽器</strong> 打開本系統。",
+            s4_3: "點擊 <strong>「📥 匯入雲端備份」</strong>，從 Google 雲端硬碟選擇剛剛的檔案，即可無縫接軌！"
         },
         vi: {
             title: "Hệ Thống Tính Lương & Tăng Ca - Hướng Dẫn",
@@ -476,6 +543,7 @@
             s1_2_d: "Nhập tiền bảo hiểm... hệ thống sẽ tự trừ khi kết toán.",
             h3: "📝 Bước 2: Chấm công (Tăng ca / Nghỉ phép)",
             s2_desc: "Đây là phần bạn dùng nhiều nhất: Chọn <strong>➕ Tăng ca</strong> hoặc <strong>➖ Nghỉ phép</strong>, chọn ngày, nhập số giờ là xong.",
+            night_summary: "🌙 Dành riêng cho ca đêm: Chức năng đặc biệt (Bấm để mở)",
             s2_star: "🌟 Chức năng đặc biệt: Ca đêm + Nghỉ bão",
             s2_star_d: "Khi chọn \"Ca đêm\" và gặp ngày \"Nghỉ bão\", hệ thống sẽ tự mở rộng thành <strong>lưới 2x2</strong> để bạn nhập 2 mức giờ tăng ca với hệ số khác nhau!",
             img2_title: "Minh họa: Giao diện nhập 2 mức giờ (Ca đêm bão)",
@@ -492,10 +560,10 @@
             img3_title: "Minh họa: Tính năng \"Bấm để sửa\" trong bảng",
             img3_ot: "Tăng ca",
             h5: "☁️ Bước 4: Đồng bộ đám mây đa thiết bị",
-            s4_desc: "Hệ thống không dùng máy chủ để bảo mật. Muốn chuyển dữ liệu từ máy tính sang điện thoại:",
-            s4_1: "Trên máy tính bấm <strong>\"📤 Xuất bản sao lưu\"</strong>.",
-            s4_2: "Gửi file đó sang điện thoại (qua Line/Email).",
-            s4_3: "Mở hệ thống trên điện thoại, bấm <strong>\"📥 Nhập sao lưu\"</strong> và chọn file đó là xong!"
+            s4_desc: "Hệ thống không dùng máy chủ để bảo mật thông tin. Khuyên dùng <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>trình duyệt Chrome</strong> để thực hiện đồng bộ hóa qua các bước sau:",
+            s4_1: "Trên máy tính bấm <strong>\"📤 Xuất bản sao lưu\"</strong>, sau đó tải file vừa tải xuống lên <img src='https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg' class='app-icon' alt='Drive'><strong>Google Drive</strong>.",
+            s4_2: "Mở hệ thống này trên điện thoại cũng bằng <img src='https://upload.wikimedia.org/wikipedia/commons/e/e1/Google_Chrome_icon_%28February_2022%29.svg' class='app-icon' alt='Chrome'><strong>trình duyệt Chrome</strong>.",
+            s4_3: "Bấm <strong>\"📥 Nhập sao lưu đám mây\"</strong>, chọn file sao lưu từ Google Drive để đồng bộ liền mạch!"
         }
     };
 
@@ -530,20 +598,19 @@
         document.getElementById('t_s1_2_d').innerText = d.s1_2_d;
         document.getElementById('t_h3').innerText = d.h3;
         document.getElementById('t_s2_desc').innerHTML = d.s2_desc;
+        document.getElementById('t_night_summary').innerText = d.night_summary;
         document.getElementById('t_s2_star').innerText = d.s2_star;
         document.getElementById('t_s2_star_d').innerHTML = d.s2_star_d;
         document.getElementById('t_img2_title').innerText = d.img2_title;
         document.getElementById('t_img2_1').innerText = d.img2_1;
         document.getElementById('t_img2_2').innerText = d.img2_2;
         
-        // Step 3 updates
         document.getElementById('t_h4').innerText = d.h4;
         document.getElementById('t_s3_1').innerText = d.s3_1;
         document.getElementById('t_s3_1_d').innerText = d.s3_1_d;
         document.getElementById('t_s3_2').innerText = d.s3_2;
         document.getElementById('t_s3_2_d').innerText = d.s3_2_d;
         
-        // Calendar Mockup translation
         document.getElementById('t_img_cal_title').innerText = d.img_cal_title;
         document.getElementById('t_img_cal_toggle').innerText = d.img_cal_toggle;
         document.getElementById('t_w0').innerText = d.w0;
@@ -560,14 +627,14 @@
 
         document.getElementById('t_img3_title').innerText = d.img3_title;
         document.getElementById('t_img3_ot').innerText = d.img3_ot;
+        
         document.getElementById('t_h5').innerText = d.h5;
-        document.getElementById('t_s4_desc').innerText = d.s4_desc;
+        document.getElementById('t_s4_desc').innerHTML = d.s4_desc;
         document.getElementById('t_s4_1').innerHTML = d.s4_1;
-        document.getElementById('t_s4_2').innerText = d.s4_2;
+        document.getElementById('t_s4_2').innerHTML = d.s4_2;
         document.getElementById('t_s4_3').innerHTML = d.s4_3;
     }
 
-    // Initialize content
     applyContent();
 </script>
 
