@@ -170,6 +170,7 @@
             display: block;
             margin: 0 auto;
             background: #eef0f6; /* 影片載入前的底色 */
+            object-fit: cover;
         }
 
         /* 夜班專屬說明收折區塊 */
@@ -288,11 +289,10 @@
             <li><strong id="t_s3_1">📅 全月圖 (你的排班總控中心)：</strong><br><span id="t_s3_1_d">一眼掌握當月所有出勤、加班與請假狀況，絕不漏算任何一筆心血！這張圖只會亮起 26號～25號 的格子，非計薪週期會自動變透明。開啟「調休編輯模式」後，直接點擊月曆上的格子，還能在各種假別（平日/休/例/國/颱）之間無限切換，排班異動瞬間搞定！</span></li>
         </ul>
 
-        <!-- 動畫解說 1: 全月圖操作 -->
+        <!-- 動畫解說 1: 全月圖操作 (啟用懶加載 preload="none") -->
         <div class="mock-image" style="padding: 15px; background: transparent; border: none; box-shadow: none;">
             <div class="mock-title" id="t_img_cal_title">動畫圖解：全月圖 (點擊切換假別)</div>
-            <!-- 加入 playsinline 確保手機上不會強制全螢幕播放 -->
-            <video class="tutorial-video" autoplay loop muted playsinline>
+            <video class="tutorial-video lazy-video" loop muted playsinline preload="none" poster="https://raw.githubusercontent.com/laix4/Guide/main/MoonUG.jpg">
                 <source src="https://raw.githubusercontent.com/laix4/Guide/main/MoonUG.mp4" type="video/mp4">
                 您的瀏覽器不支援影片播放。
             </video>
@@ -303,10 +303,10 @@
             <li><strong id="t_s3_2">明細表快速改時數：</strong><br><span id="t_s3_2_d">發現時數打錯了？不需要刪掉重打！直接在明細表的「時數框」裡輸入正確數字，上方的總金額就會在 0.1 秒內瞬間重新算好。</span></li>
         </ul>
 
-        <!-- 動畫解說 2: 明細表修改 -->
+        <!-- 動畫解說 2: 明細表修改 (啟用懶加載 preload="none") -->
         <div class="mock-image" style="padding: 15px; background: transparent; border: none; box-shadow: none;">
             <div class="mock-title" id="t_img3_title">動畫圖解：明細表「直接點擊修改」功能</div>
-            <video class="tutorial-video" autoplay loop muted playsinline>
+            <video class="tutorial-video lazy-video" loop muted playsinline preload="none" poster="https://raw.githubusercontent.com/laix4/Guide/main/DetailedO.jpg">
                 <source src="https://raw.githubusercontent.com/laix4/Guide/main/DetailedO.mp4" type="video/mp4">
                 您的瀏覽器不支援影片播放。
             </video>
@@ -531,6 +531,36 @@
     }
 
     applyContent();
+
+    // --- 影片懶加載效能優化 (滑到才播放) ---
+    document.addEventListener("DOMContentLoaded", function() {
+        const lazyVideos = [].slice.call(document.querySelectorAll("video.lazy-video"));
+
+        if ("IntersectionObserver" in window) {
+            const videoObserver = new IntersectionObserver(function(entries, observer) {
+                entries.forEach(function(video) {
+                    if (video.isIntersecting) {
+                        // 當影片進入畫面時，才開始載入並播放
+                        video.target.preload = "auto";
+                        video.target.play().catch(e => console.log("自動播放被瀏覽器阻擋:", e));
+                    } else {
+                        // 當影片離開畫面時，暫停播放以節省手機資源
+                        video.target.pause();
+                    }
+                });
+            }, { rootMargin: "0px 0px 200px 0px" }); // 提早 200px 觸發載入，看起來更順暢
+
+            lazyVideos.forEach(function(video) {
+                videoObserver.observe(video);
+            });
+        } else {
+            // 如果是很舊的瀏覽器不支援，就直接載入播放
+            lazyVideos.forEach(function(video) {
+                video.preload = "auto";
+                video.play();
+            });
+        }
+    });
 </script>
 
 </body>
