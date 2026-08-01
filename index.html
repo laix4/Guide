@@ -96,7 +96,7 @@
             margin: 15px 0;
         }
 
-        /* 概念圖解 (CSS Mockups) - 用於時間軸 */
+        /* 概念圖解 (CSS Mockups) */
         .mock-image {
             background: var(--bg-color);
             border: 1px solid #dcdfe6;
@@ -118,7 +118,7 @@
             font-weight: bold;
         }
 
-        /* 圖示 1: 跨日時間軸 (保留純 CSS，因為是概念圖不是介面操作) */
+        /* 圖示 1: 跨日時間軸 */
         .timeline {
             display: flex;
             justify-content: space-between;
@@ -148,6 +148,17 @@
             margin-top: 50px; font-family: sans-serif;
             box-shadow: 0 4px 10px rgba(94, 72, 132, 0.3);
         }
+
+        /* 圖示 2: 雙格 UI */
+        .mock-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            max-width: 500px; margin: 0 auto; font-family: sans-serif;
+        }
+        .mock-input {
+            background: #fff; border: 2px dashed var(--accent); padding: 15px;
+            border-radius: 8px; text-align: center; font-weight: bold; color: var(--accent);
+        }
+        .mock-input span { display: block; font-size: 12px; color: var(--text-muted); margin-bottom: 5px; }
 
         /* 影片播放框架 (取代原本的靜態介面圖) */
         .tutorial-video {
@@ -227,6 +238,7 @@
             .header h1 { font-size: 22px; }
             .timeline { max-width: 100%; }
             .tutorial-video { border-radius: 8px; }
+            .mock-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -323,7 +335,7 @@
                 <h3 id="t_night_p2_title" style="color: var(--primary);">2. 跨日打卡邏輯：帳絕對不切斷</h3>
                 <p id="t_night_p2_desc">晚上上班、隔天早上才下班怎麼記？<strong>請將時數全部記在「上班當天」！</strong>系統會自動將跨夜工時歸屬在正確的日期，絕對不會把帳切斷跑到隔天。</p>
                 
-                <!-- 概念圖解：跨日打卡邏輯 (保持 CSS，因非操作介面) -->
+                <!-- 概念圖解：跨日打卡邏輯 -->
                 <div class="mock-image">
                     <div class="mock-title" id="t_img1_title">圖解：夜班跨日打卡邏輯</div>
                     <div class="timeline">
@@ -345,13 +357,13 @@
                     <span id="t_s2_star_d">當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！</span>
                 </div>
 
-                <!-- 動畫解說 3: 颱風假雙格輸入 -->
-                <div class="mock-image" style="padding: 15px; background: transparent; border: none; box-shadow: none;">
-                    <div class="mock-title" id="t_img2_title">動畫圖解：夜班颱風假 雙格輸入 UI</div>
-                    <video class="tutorial-video" autoplay loop muted playsinline>
-                        <source src="夜班颱風假影片網址.mp4" type="video/mp4">
-                        您的瀏覽器不支援影片播放。
-                    </video>
+                <!-- 靜態 CSS 繪製雙格 UI -->
+                <div class="mock-image">
+                    <div class="mock-title" id="t_img2_title">圖解：夜班颱風假 雙格輸入 UI</div>
+                    <div class="mock-grid">
+                        <div class="mock-input"><span id="t_img2_1">颱風加班時數</span>3.5 H</div>
+                        <div class="mock-input"><span id="t_img2_2">平日加班時數</span>2.5 H</div>
+                    </div>
                 </div>
 
             </div>
@@ -404,7 +416,8 @@
             img1_result: "✅ 全部歸屬出勤日：7月15日",
             night_p3_title: "3. 雙軌時數：夜班 ＋ 颱風假",
             s2_star_d: "當勾選了「夜班」且遇到「颱風假」時，系統會聰明地展開成 <strong>2x2 的網格</strong>，讓你分別輸入兩段不同倍率的時數！",
-            img2_title: "動畫圖解：夜班颱風假 雙格輸入 UI",
+            img2_title: "圖解：夜班颱風假 雙格輸入 UI",
+            img2_1: "颱風加班時數", img2_2: "平日加班時數",
         },
         vi: {
             title: "Hệ Thống Tính Lương & Tăng Ca - Hướng Dẫn",
@@ -448,7 +461,8 @@
             img1_result: "✅ Tất cả tính vào ngày: 15 tháng 7",
             night_p3_title: "3. Chức năng đặc biệt: Ca đêm + Nghỉ bão",
             s2_star_d: "Khi chọn \"Ca đêm\" và gặp ngày \"Nghỉ bão\", hệ thống sẽ tự mở rộng thành <strong>lưới 2x2</strong> để bạn nhập 2 mức giờ tăng ca với hệ số khác nhau!",
-            img2_title: "Video: Giao diện nhập 2 mức giờ",
+            img2_title: "Minh họa: Giao diện nhập 2 mức giờ (Ca đêm bão)",
+            img2_1: "Giờ TC bão", img2_2: "Giờ TC thường",
         }
     };
 
@@ -512,6 +526,8 @@
         document.getElementById('t_night_p3_title').innerText = d.night_p3_title;
         document.getElementById('t_s2_star_d').innerHTML = d.s2_star_d;
         document.getElementById('t_img2_title').innerText = d.img2_title;
+        document.getElementById('t_img2_1').innerText = d.img2_1;
+        document.getElementById('t_img2_2').innerText = d.img2_2;
     }
 
     applyContent();
